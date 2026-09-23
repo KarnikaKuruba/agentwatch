@@ -1,0 +1,38 @@
+{
+  "agent_mode": "",
+  "totals": {
+    "malicious": 16,
+    "benign": 8,
+    "tp": 16,
+    "fn": 0,
+    "fp": 0,
+    "tn": 8
+  },
+  "metrics": {
+    "recall": 1.0,
+    "precision": 1.0,
+    "false_positive_rate": 0.0
+  },
+  "by_category": {
+    "direct_injection": {
+      "detected": 4,
+      "total": 4
+    },
+    "jailbreak": {
+      "detected": 2,
+      "total": 2
+    },
+    "indirect_injection": {
+      "detected": 6,
+      "total": 6
+    },
+    "data_leakage": {
+      "detected": 2,
+      "total": 2
+    },
+    "exfiltration": {
+      "detected": 2,
+      "total": 2
+    }
+  }
+}

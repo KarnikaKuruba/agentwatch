@@ -1,0 +1,36 @@
+<!-- AgentWatch rules for Wazuh. Group 100200 is a local, unused range. -->
+<group name="agentwatch,ai_agent,">
+
+  <rule id="100200" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="agentwatch.type">\.+</field>
+    <description>AgentWatch: agent event ($(agentwatch.type))</description>
+  </rule>
+
+  <rule id="100201" level="10">
+    <if_sid>100200</if_sid>
+    <field name="agentwatch.type">tool_result</field>
+    <field name="agentwatch.trust">untrusted</field>
+    <description>AgentWatch: agent ingested untrusted content via $(agentwatch.tool)</description>
+    <mitre><id>AML.T0051.001</id></mitre>
+  </rule>
+
+  <rule id="100202" level="12">
+    <if_sid>100200</if_sid>
+    <field name="agentwatch.type">tool_call</field>
+    <field name="agentwatch.tool">send_email</field>
+    <description>AgentWatch: agent invoked the email tool (possible exfiltration)</description>
+    <mitre><id>AML.T0086</id></mitre>
+  </rule>
+
+  <!-- Untrusted content ingested, then an email sent within the same session:
+       the classic indirect-injection-to-exfiltration chain. -->
+  <rule id="100203" level="14" frequency="2" timeframe="120">
+    <if_matched_sid>100201</if_matched_sid>
+    <if_sid>100202</if_sid>
+    <same_field>agentwatch.session_id</same_field>
+    <description>AgentWatch: email sent after ingesting untrusted content, likely injection-driven exfiltration</description>
+    <mitre><id>AML.T0051.001</id><id>AML.T0086</id></mitre>
+  </rule>
+
+</group>
