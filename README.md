@@ -23,6 +23,28 @@ traditional SOC alerts.
 - Maps each alert to MITRE ATLAS and scores session risk from 0 to 100.
 - Shows it all in a dashboard, and can forward alerts to Wazuh or ThreatWatch.
 
+## Screenshots
+
+**Dashboard overview.** Session counts, the session list, and alerts grouped by MITRE ATLAS technique.
+
+![Dashboard overview](docs/screenshots/dashboard.png)
+
+**Flagged sessions.** Attacks ranked by risk score, from direct and indirect prompt injection to jailbreaks.
+
+![Flagged sessions](docs/screenshots/flagged-sessions.png)
+
+**Severity filter.** Only the high severity sessions.
+
+![High severity sessions](docs/screenshots/high-severity.png)
+
+**System prompt leak.** The user prompt tries to override the agent's rules, and the agent prints its system prompt. AgentWatch flags the override and spots the planted canary (`AW-CANARY-7731`) in the output.
+
+![System prompt leak](docs/screenshots/prompt-leak.png)
+
+**Data exfiltration.** The agent is told to send the customer list outside the company. The trace shows the `query_db` call, the customer records it returned, and the `send_email` call to an outside address. Three alerts fire along the way.
+
+![Data exfiltration trace](docs/screenshots/exfiltration.png)
+
 ## Results
 
 From the bundled attack suite against the simulated agent, rules only:
@@ -105,6 +127,7 @@ attacks/      the attack and benign test cases
 fixtures/     fake web pages and documents, some carrying hidden injections
 frontend/     the dashboard (single self-contained HTML file)
 wazuh/        optional Wazuh decoder rules and setup notes
+docs/         dashboard screenshots
 main.py       FastAPI backend
 run_attacks.py  run the suite and write data/metrics.json
 ```
