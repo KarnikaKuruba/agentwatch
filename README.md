@@ -61,6 +61,20 @@ key. Point it at a real LLM agent (`AGENT_MODE=openai`) to measure detection
 against genuine model behaviour, which is the more honest number to report.
 Regenerate the table any time with `python run_attacks.py`.
 
+### Running it
+
+**Install.** One `pip install` pulls in everything.
+
+![Installing requirements](docs/screenshots/install.png)
+
+**Attack suite.** `python run_attacks.py` runs all 24 cases. Each line shows the risk score and the ATLAS techniques that fired, followed by the overall detection results.
+
+![Attack suite output](docs/screenshots/attack-suite.png)
+
+**Per-category results and backend.** Every category is fully detected. After that, `uvicorn main:app` starts the backend, and the dashboard pulls sessions and stats from it.
+
+![Category results and backend running](docs/screenshots/results-and-server.png)
+
 ## Architecture
 
 ```
